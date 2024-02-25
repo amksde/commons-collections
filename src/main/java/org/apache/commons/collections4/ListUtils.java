@@ -204,6 +204,42 @@ public class ListUtils {
     }
 
     /**
+     * Checks the validity of the provided index with respect to a given list.
+     * If the list is null, all indices are invalid
+     * @param list The list
+     * @param index The index to check
+     * @return A boolean value, true or false
+     * @param <T> The list type
+     */
+    public static <T> boolean isIndexValid(final List<T> list, int index) {
+        if (list == null) {
+            return false;
+        }
+
+        return index >= 0 && index < list.size();
+    }
+
+    /**
+     * Returns the value from the provided list at the given index,
+     * or a defaultValue if the index is invalid or the list is null
+     *
+     * @param list The list to get the value from
+     * @param index The index from which the value has to be retrieved
+     * @param defaultValue The value to return in case list is null or the index is invalid
+     * @return Value at index or the defaultValue
+     * @param <T> The list type
+     */
+    public static <T> T safeGetFromIndex(final List<T> list, int index, T defaultValue) {
+        if (list != null) {
+            if (isIndexValid(list, index)) {
+                return list.get(index);
+            }
+        }
+
+        return defaultValue;
+    }
+
+    /**
      * Generates a hash code using the algorithm specified in
      * {@link java.util.List#hashCode()}.
      * <p>

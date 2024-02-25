@@ -479,5 +479,37 @@ public class ListUtilsTest {
 
         assertEquals(expected, result);
     }
+    
+    @Test
+    public void testIsIndexValid() {
+        final List<String> list = new ArrayList<>();
+        list.add(a);
+        list.add(b);
+        list.add(c);
+        list.add(d);
+
+        assertTrue(ListUtils.isIndexValid(list, 2));
+        assertFalse(ListUtils.isIndexValid(list, Integer.MIN_VALUE));
+        assertFalse(ListUtils.isIndexValid(list, Integer.MAX_VALUE));
+
+        assertFalse(ListUtils.isIndexValid(null, 2));
+        assertFalse(ListUtils.isIndexValid(null, Integer.MAX_VALUE));
+        assertFalse(ListUtils.isIndexValid(null, Integer.MIN_VALUE));
+    }
+
+    @Test
+    public void testSafeGetFromList() {
+        final List<String> list = new ArrayList<>();
+        list.add(a);
+        list.add(b);
+        list.add(null);
+        list.add(d);
+
+        assertEquals(b, ListUtils.safeGetFromIndex(list, 1, ""));
+        assertEquals("INVALID_OPERATION", ListUtils.safeGetFromIndex(null, 1, "INVALID_OPERATION"));
+        assertEquals("INVALID", ListUtils.safeGetFromIndex(list, Integer.MAX_VALUE, "INVALID"));
+        assertEquals("INVALID", ListUtils.safeGetFromIndex(list, -20, "INVALID"));
+    }
+
 
 }
